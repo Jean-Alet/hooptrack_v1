@@ -5,16 +5,6 @@
     <?php
     $mdp = isset($_POST['mdp']) ? $_POST['mdp'] : "";
     $login = isset($_POST['login']) ? $_POST['login'] : "";
-    if (isset($_COOKIE['cookie_nombre1'])) {
-        $cookie1 = $_COOKIE['cookie_nombre1'];
-    } else {
-        $cookie1 = 0;
-    }
-    if (isset($_COOKIE['cookie_nombre2'])) {
-        $cookie2 = $_COOKIE['cookie_nombre2'];
-    } else {
-        $cookie2 = 0;
-    }
     $_SESSION['login'] = $login;
     $_SESSION['mdp'] = $mdp;
     ?>
