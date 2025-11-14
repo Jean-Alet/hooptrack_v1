@@ -4,22 +4,19 @@ try {
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage());
 }
-if (!empty($recherche)) {
-
-    $req = $linkpdo->prepare('
-        SELECT *
-        FROM joueur
-    ');
+$req = $linkpdo->prepare('SELECT * FROM joueur');
 ?>
     <table border="1" cellpadding="5" cellspacing="0">';
     <tr>
+    <th>Numéro de Licence</th>
     <th>Nom</th>
     <th>Prénom</th>
-    <th>Adresse</th>
-    <th>Code postal</th>
-    <th>Ville</th>
-    <th>Téléphone</th>
-    <th>Actions</th>
+    <th>Date de naissance</th>
+    <th>Taille</th>
+    <th>Poids</th>
+    <th>Statut</th>
+    <th>Commentaire</th>
+    <th>Modification/Supression</th>
     </tr>;
 <?php
     while ($data = $req->fetch()) {
@@ -33,8 +30,8 @@ if (!empty($recherche)) {
         echo '<td>' . $data['statut'] . '</td>';
         echo '<td>' . $data['commentaire'] . '</td>';
         echo '<td>
-                <a href="modification.php?var1=' . $data['id'] . '">Modifier</a> |
-                <a href="suppression.php?var1=' . $data['id'] . '">Supprimer</a>
+                <a href="modificationjoueur.php?var1=' . $data['id'] . '">Modifier</a> |
+                <a href="suppressionjoueur.php?var1=' . $data['id'] . '">Supprimer</a>
               </td>';
         echo '</tr>';
     }
@@ -42,5 +39,4 @@ if (!empty($recherche)) {
     echo '</table>';
 
     $req->closeCursor();
-}
 ?>
