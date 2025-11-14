@@ -9,7 +9,7 @@
     $_SESSION['mdp'] = $mdp;
     ?>
 </head>
-
+<!-- à changer car on veut que ça soit crypter -->
 <body>
     <form action="accueil.php" method="post">
         Login :<input type="text" name="login">
