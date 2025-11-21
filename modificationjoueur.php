@@ -14,7 +14,7 @@
     ?>
 </head>
 <body>
-    <form action="http://localhost/ajoutcontact.php" method="post">
+    <form action="http://localhost/modificationjoueur.php" method="post">
         Numéro de Licence : <input type="text" name="num_licence" value="<?php echo htmlspecialchars($data['num_licence']); ?>"><br />
         Nom : <input type="text" name="nom" value="<?php echo htmlspecialchars($data['nom']); ?>"><br />
         Prénom : <input type="text" name="prenom" value="<?php echo htmlspecialchars($data['prenom']); ?>"><br />
