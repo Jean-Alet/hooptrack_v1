@@ -17,10 +17,7 @@ quand il y a erreur sql.
 
 
 
-Modifications a faire:
-
-- !!! IMPORTANT !!! j'ai changer l'organisation des fichiers plus rien n'est lié ---> il faut les remmettre bien (yen a c'est deja bon)
-
+Modifications à faire:
 - CSS centralisé (deja fait le include, maintenant il faut faire le graphique dans chaque page) + changer le css car complètement généré
 - PDO centralisé
 - SQL centralisé (suçage max)
@@ -36,7 +33,6 @@ Choses à vérifier:
 - variable ?? ''    à expliquer (facile a faire mais j'ai la flemme)
 - ajout feuille bizarre : player_$i role_$i <---- c'est trop bizarre
 
-- autentification pas sensible à la casse
+il faut aussi faire une appli differente pour tel
 
-il faut aussi faire une appli differente pour tel 
-enlever charset dans les co pdo
+supprimer les boutons inutiles page d'accueil

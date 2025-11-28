@@ -26,7 +26,7 @@ if (empty($_SESSION['login'])) {
         <a href="match.php" class="btn">Matchs</a>
         <a href="feuille_match.php" class="btn">Feuille</a>
         <a href="statistiques.php" class="btn">Stats</a>
-        <a href="../core/déconnecter.php" class="boutondeco">Déconnexion</a>
+        <a href="../core/déconnecter.php" class="btn">Déconnexion</a>
     </nav>
 </header>
 

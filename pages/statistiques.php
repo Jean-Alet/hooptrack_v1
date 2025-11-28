@@ -60,7 +60,7 @@ foreach ($liste as $p) {
 <!doctype html>
 <html><head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>Statistiques</title>
 </head>
 <body>
