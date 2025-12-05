@@ -7,6 +7,8 @@ try {
     die('Erreur BDD');
 }
 
+include '../includes/_nav.php';
+
 // résumé victoires/défaites/nuls
 $stmt = $linkpdo->query("SELECT resultat, COUNT(*) as c FROM `match` GROUP BY resultat");
 $tot = [];

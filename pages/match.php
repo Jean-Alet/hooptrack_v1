@@ -6,6 +6,8 @@ try {
     die('Erreur : ' . $e->getMessage());
 }
 
+include '../includes/_nav.php';
+
 $req = $pdo->prepare('SELECT id_match, date_match, equipe_adverse, lieu, resultat FROM `match` ORDER BY date_match DESC');
 $req->execute();
 ?>
@@ -40,11 +42,11 @@ $req->closeCursor();
 ?>
 </table>
 
-<form action="../core/ajoutmatch.php" method="get">
+<form action="../pages/ajoutermatch.php" method="get">
     <button type="submit">Ajouter match</button>
 </form>
 
-<form action="../pages/accueil.php" method="get">
+<form action="accueil.php" method="get">
     <button type="submit">Accueil</button>
 </form>
 </body>

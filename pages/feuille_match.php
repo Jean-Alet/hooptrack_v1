@@ -7,6 +7,8 @@ try {
     die('Erreur BDD');
 }
 
+include '../includes/_nav.php';
+
 // matchs à venir 
 $stm = $linkpdo->prepare('SELECT id_match, date_match, equipe_adverse FROM `match` WHERE date_match >= NOW() ORDER BY date_match ASC');
 $stm->execute();
@@ -21,7 +23,7 @@ $joueurs = $stm2->fetchAll(PDO::FETCH_ASSOC);
 <html><head>
     <meta charset="utf-8">
     <title>Préparer feuille de match</title>
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <form method="post" action="ajoutfeuille.php">
