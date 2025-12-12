@@ -1,5 +1,4 @@
 <?php
-
 try {
     $linkpdo = new PDO('mysql:host=localhost;dbname=basketball', 'root', '');
     $linkpdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -23,7 +22,7 @@ $joueurs = $stm2->fetchAll(PDO::FETCH_ASSOC);
 <html><head>
     <meta charset="utf-8">
     <title>Préparer feuille de match</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <form method="post" action="ajoutfeuille.php">
