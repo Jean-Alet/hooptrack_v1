@@ -25,7 +25,7 @@ if (!empty($_POST)) {
             $error = 'Mot de passe incorrect.';
         } else {
             $_SESSION['login'] = $login;
-            header('Location: accueil.php');
+            header('Location: ../pages/accueil.php');
             exit;
         }
     }

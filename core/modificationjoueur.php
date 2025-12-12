@@ -29,7 +29,7 @@ if (!$data) {
 <head><meta charset="utf-8"><title>Modifier joueur</title>
 <link rel="stylesheet" href="../css/style.css"></head>
 <body>
-    <form action="ajoutjoueur.php" method="post">
+    <form action="modificationJoueur.php" method="post">
 
         Numéro de licence :
         <input type="text" name="num_licence" value="<?php echo htmlspecialchars($data['num_licence']); ?>"><br>

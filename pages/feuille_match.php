@@ -25,7 +25,7 @@ $joueurs = $stm2->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<form method="post" action="ajoutfeuille.php">
+<form method="post" action="../core/ajoutFeuille.php">
     Match:
     <select name="id_match" required>
         <?php foreach ($matchs as $m): ?>

@@ -42,7 +42,7 @@ $req->closeCursor();
 ?>
 </table>
 
-<form action="../pages/ajoutermatch.php" method="get">
+<form action="../pages/ajoutMatch_disp.php" method="get">
     <button type="submit">Ajouter match</button>
 </form>
 

@@ -40,7 +40,7 @@ $req->closeCursor();
 ?>
 </table>
 
-<form action="../pages/ajouterjoueur.php" method="get">
+<form action="../pages/ajoutJoueur_disp.php" method="get">
     <button type="submit">Ajouter joueur</button>
 </form>
 
