@@ -1,9 +1,11 @@
+<?php include '../includes/_nav.php'; ?>
+
 <!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Ajouter joueur</title>
-    <link rel="sylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 

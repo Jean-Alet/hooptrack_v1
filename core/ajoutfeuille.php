@@ -32,6 +32,6 @@ if (!empty($_POST)) {
     }
 }
 
-header('Location: accueil.php');
+header('Location: ../pages/accueil.php');
 exit;
 ?>
