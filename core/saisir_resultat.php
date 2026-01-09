@@ -13,8 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $score_equipe = (int)$_POST['score_equipe'];
     $score_adverse = (int)$_POST['score_adverse'];
 
+    $overtime = isset($_POST['overtime']) && $_POST['overtime'] == '1' ? 1 : 0;
+
     if ($score_equipe < 0 || $score_adverse < 0) {
         header('Location: ../pages/saisirResultat_disp.php?match_id=' . $id . '&error=Les scores doivent être positifs.');
+        exit;
+    }
+
+    if ($score_equipe === $score_adverse) {
+        header('Location: ../pages/saisirResultat_disp.php?match_id=' . $id . '&error=Pas de match nul en basketball.');
         exit;
     }
 
@@ -37,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if (!empty($m['resultat'])) {
+    if (!is_null($m['score_equipe']) || !is_null($m['score_adverse'])) {
         header('Location: ../pages/match_disp.php?error=Ce match a déjà un résultat enregistré.');
         exit;
     }
 
-    $maj = $linkpdo->prepare('UPDATE `match` SET resultat = ?, score_equipe = ?, score_adverse = ? WHERE id_match = ?');
-    $maj->execute([$resultat, $score_equipe, $score_adverse, $id]);
+    $maj = $linkpdo->prepare('UPDATE `match` SET resultat = ?, score_equipe = ?, score_adverse = ?, overtime = ? WHERE id_match = ?');
+    $maj->execute([$resultat, $score_equipe, $score_adverse, $overtime, $id]);
 
     header('Location: ../pages/match_disp.php');
     exit;

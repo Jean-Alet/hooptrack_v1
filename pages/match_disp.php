@@ -42,22 +42,24 @@ $matches = getMatch($linkpdo);
         echo '<td>' . htmlspecialchars($row['equipe_adverse']) . '</td>';
         echo '<td>' . htmlspecialchars($row['lieu']) . '</td>';
         
-        // Colonne Score
-        if (!empty($row['score_equipe']) && !empty($row['score_adverse'])) {
+        if ($row['score_equipe'] !== null) {
             echo '<td>' . htmlspecialchars($row['score_equipe'] . ' - ' . $row['score_adverse']) . '</td>';
         } else {
             echo '<td>-</td>';
         }
         
-        // Colonne Résultat
-        echo '<td>' . htmlspecialchars($row['resultat'] ?: 'N/A') . '</td>';
+        $resText = $row['resultat'] ?: 'N/A';
+        if (!empty($row['overtime'])) {
+            $resText .= ' (OT)';
+        }
+        echo '<td>' . htmlspecialchars($resText) . '</td>';
         
         echo '<td>';
         if (!$isPast) {
             echo '<a href="../pages/modifierMatch_disp.php?match_id=' . urlencode($row['id_match']) . '">Modifier</a> | ';
             echo '<a href="../pages/supprimerMatch_disp.php?match_id=' . urlencode($row['id_match']) . '">Supprimer</a>';
         } else {
-            if (empty($row['resultat'])) {
+            if (empty($row['resultat']) || $row['score_equipe'] === null || $row['score_adverse'] === null) {
                 echo '<a href="../pages/saisirResultat_disp.php?match_id=' . urlencode($row['id_match']) . '">Saisir résultat</a>';
             } else {
                 echo '<span style="color: #999;">-</span>';

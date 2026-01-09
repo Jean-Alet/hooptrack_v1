@@ -1,18 +1,18 @@
 <?php
 function getMatchFutur($linkpdo) {
-    $stm = $linkpdo->prepare('SELECT id_match, date_match, equipe_adverse FROM `match` WHERE date_match >= NOW() ORDER BY date_match ASC');
+    $stm = $linkpdo->prepare('SELECT id_match, date_match, equipe_adverse, lieu, resultat, score_equipe, score_adverse, overtime FROM `match` WHERE date_match >= NOW() ORDER BY date_match ASC');
     $stm->execute();
     return $stm->fetchAll();
 }
 
 function getMatch($linkpdo){
-    $req = $linkpdo->prepare('SELECT id_match, date_match, equipe_adverse, lieu, resultat FROM `match` ORDER BY date_match DESC');
+    $req = $linkpdo->prepare('SELECT id_match, date_match, equipe_adverse, lieu, resultat, score_equipe, score_adverse, overtime FROM `match` ORDER BY date_match DESC');
     $req->execute();
     return $req->fetchAll();
 }
 
 function getMatchById($linkpdo, $id) {
-    $sel = $linkpdo->prepare('SELECT id_match, date_match, equipe_adverse, lieu, resultat FROM `match` WHERE id_match = ?');
+    $sel = $linkpdo->prepare('SELECT id_match, date_match, equipe_adverse, lieu, resultat, score_equipe, score_adverse, overtime FROM `match` WHERE id_match = ?');
     $sel->execute([$id]);
     return $sel->fetch();
 }
@@ -23,9 +23,9 @@ function getJoueurById($linkpdo, $num) {
     return $sel->fetch();
 }
 
-function insertMatch($linkpdo, $date, $adv, $lieu, $resultat) {
-    $req = $linkpdo->prepare('INSERT INTO `match` (date_match, equipe_adverse, lieu, resultat) VALUES (?, ?, ?, ?)');
-    $req->execute([$date, $adv, $lieu, $resultat]);
+function insertMatch($linkpdo, $date, $adv, $lieu, $resultat, $overtime = 0) {
+    $req = $linkpdo->prepare('INSERT INTO `match` (date_match, equipe_adverse, lieu, resultat, overtime) VALUES (?, ?, ?, ?, ?)');
+    $req->execute([$date, $adv, $lieu, $resultat, $overtime]);
 }
 
 function updateMatch($linkpdo, $id, $date, $equipe, $lieu, $resultat) {
@@ -158,7 +158,7 @@ function getFeuilleParMatch($linkpdo, $id_match) {
 }
 
 function getMatchLienFeuille($linkpdo) {
-    $q = $linkpdo->prepare("SELECT DISTINCT m.id_match, m.date_match, m.equipe_adverse, m.lieu, m.resultat FROM `match` m JOIN feuille_match f ON m.id_match = f.id_match ORDER BY m.date_match DESC");
+    $q = $linkpdo->prepare("SELECT DISTINCT m.id_match, m.date_match, m.equipe_adverse, m.lieu, m.resultat, m.overtime FROM `match` m JOIN feuille_match f ON m.id_match = f.id_match ORDER BY m.date_match DESC");
     $q->execute();
     return $q->fetchAll();
 }

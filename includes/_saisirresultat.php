@@ -17,8 +17,8 @@ if ($matchDate >= $currentDate) {
     exit;
 }
 
-if (!empty($m['resultat'])) {
-    header('Location: ../pages/match_disp.php?error=Ce match a déjà un résultat enregistré.');
+if (!is_null($m['score_equipe'])) {
+    header('Location: ../pages/match_disp.php?error=Ce match a déjà un score enregistré.');
     exit;
 }
 ?>

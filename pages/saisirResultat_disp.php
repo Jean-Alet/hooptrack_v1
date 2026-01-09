@@ -30,6 +30,10 @@
         <label>Score de l'équipe adverse :</label>
         <input type="number" name="score_adverse" required>
 
+        <label>
+            <input type="checkbox" name="overtime" value="1" <?php echo (!empty($m['overtime']) ? 'checked' : ''); ?>> Match gagné/perdu en OT
+        </label>
+
         <div class="actions">
             <input type="submit" value="Enregistrer le résultat">
         </div>
