@@ -26,7 +26,9 @@ foreach ($liste as $p) {
 
     // matchs consécutifs joués (à partir du match le plus récent)
     $consec = 0;
-    foreach ($matchIds as $mid) {
+        // récupérer la liste des matchs passés (plus récents en premier)
+        $matchIds = getIdsMatchPasses($linkpdo) ?: [];
+        foreach ($matchIds as $mid) {
         if (estDansMatch($linkpdo, $mid, $num)) $consec++; else break;
     }
 

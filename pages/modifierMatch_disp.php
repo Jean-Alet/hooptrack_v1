@@ -1,7 +1,6 @@
 <?php include '../includes/_session.php'; 
       include '../includes/_modifiermatch.php';
 ?>
-?>
 <!doctype html>
 <html>
 <head>
@@ -28,14 +27,6 @@
         <select name="lieu">
             <option value="Domicile" <?php if ($m['lieu']=='Domicile') echo 'selected'; ?>>Domicile</option>
             <option value="Extérieur" <?php if ($m['lieu']=='Extérieur') echo 'selected'; ?>>Extérieur</option>
-        </select>
-
-        <label>Résultat :</label>
-        <select name="resultat">
-            <option value="">--</option>
-            <option value="Victoire" <?php if ($m['resultat']=='Victoire') echo 'selected'; ?>>Victoire</option>
-            <option value="Défaite" <?php if ($m['resultat']=='Défaite') echo 'selected'; ?>>Défaite</option>
-            <option value="Nul" <?php if ($m['resultat']=='Nul') echo 'selected'; ?>>Nul</option>
         </select>
 
         <div class="actions">

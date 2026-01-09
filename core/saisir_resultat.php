@@ -4,21 +4,25 @@ include '../includes/_linkpdo.php';
 include '../includes/_queries.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['id_match']) || !isset($_POST['resultat'])) {
+    if (!isset($_POST['id_match']) || !isset($_POST['score_equipe']) || !isset($_POST['score_adverse'])) {
         header('Location: ../pages/match_disp.php');
         exit;
     }
 
     $id = (int)$_POST['id_match'];
-    $resultat = $_POST['resultat'];
+    $score_equipe = (int)$_POST['score_equipe'];
+    $score_adverse = (int)$_POST['score_adverse'];
 
-    // Validation du résultat
-    if (!in_array($resultat, ['Victoire', 'Défaite', 'Nul'])) {
-        header('Location: ../pages/saisirResultat_disp.php?match_id=' . $id . '&error=Résultat invalide.');
+    if ($score_equipe < 0 || $score_adverse < 0) {
+        header('Location: ../pages/saisirResultat_disp.php?match_id=' . $id . '&error=Les scores doivent être positifs.');
         exit;
     }
 
-    // Vérifier que le match existe et peut recevoir un résultat
+    if ($score_equipe > $score_adverse) {
+        $resultat = 'Victoire';
+    } else {
+        $resultat = 'Défaite';
+    }
     $m = getMatchById($linkpdo, $id);
     if (!$m) {
         header('Location: ../pages/match_disp.php');
@@ -38,9 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Mettre à jour seulement le résultat
-    $maj = $linkpdo->prepare('UPDATE `match` SET resultat = ? WHERE id_match = ?');
-    $maj->execute([$resultat, $id]);
+    $maj = $linkpdo->prepare('UPDATE `match` SET resultat = ?, score_equipe = ?, score_adverse = ? WHERE id_match = ?');
+    $maj->execute([$resultat, $score_equipe, $score_adverse, $id]);
 
     header('Location: ../pages/match_disp.php');
     exit;

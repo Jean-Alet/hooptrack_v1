@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date_match = $_POST['date_match'] ?? '';
     $equipe = $_POST['equipe_adverse'] ?? '';
     $lieu = $_POST['lieu'] ?? 'Domicile';
-    $resultat = $_POST['resultat'] ?? null;
 
     // Validation : la date ne peut pas être dans le passé
     $newDate = strtotime($date_match);
@@ -24,7 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    updateMatch($linkpdo, $id, $date_match, $equipe, $lieu, $resultat);
+    // Récupérer le match actuel pour conserver le résultat
+    $m = getMatchById($linkpdo, $id);
+    updateMatch($linkpdo, $id, $date_match, $equipe, $lieu, $m['resultat']);
 
     header('Location: ../pages/match_disp.php');
     exit;

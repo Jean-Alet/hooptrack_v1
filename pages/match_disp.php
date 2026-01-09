@@ -26,8 +26,9 @@ $matches = getMatch($linkpdo);
         <th>Date & heure</th>
         <th>Équipe adverse</th>
         <th>Lieu</th>
+        <th>Score</th>
         <th>Résultat</th>
-        <th>Modifier / Supprimer</th>
+        <th>Actions</th>
     </tr>
     <?php
     foreach ($matches as $row) {
@@ -37,16 +38,30 @@ $matches = getMatch($linkpdo);
         
         echo '<tr>';
         echo '<td>' . htmlspecialchars($row['id_match']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['date_match']) . '</td>';
+        echo '<td>' . htmlspecialchars(formatDateFr($row['date_match'])) . '</td>';
         echo '<td>' . htmlspecialchars($row['equipe_adverse']) . '</td>';
         echo '<td>' . htmlspecialchars($row['lieu']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['resultat']) . '</td>';
+        
+        // Colonne Score
+        if (!empty($row['score_equipe']) && !empty($row['score_adverse'])) {
+            echo '<td>' . htmlspecialchars($row['score_equipe'] . ' - ' . $row['score_adverse']) . '</td>';
+        } else {
+            echo '<td>-</td>';
+        }
+        
+        // Colonne Résultat
+        echo '<td>' . htmlspecialchars($row['resultat'] ?: 'N/A') . '</td>';
+        
         echo '<td>';
         if (!$isPast) {
             echo '<a href="../pages/modifierMatch_disp.php?match_id=' . urlencode($row['id_match']) . '">Modifier</a> | ';
             echo '<a href="../pages/supprimerMatch_disp.php?match_id=' . urlencode($row['id_match']) . '">Supprimer</a>';
         } else {
-            echo '<span style="color: #999;">-</span>';
+            if (empty($row['resultat'])) {
+                echo '<a href="../pages/saisirResultat_disp.php?match_id=' . urlencode($row['id_match']) . '">Saisir résultat</a>';
+            } else {
+                echo '<span style="color: #999;">-</span>';
+            }
         }
         echo '</td>';
         echo '</tr>';

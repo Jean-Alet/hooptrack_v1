@@ -25,11 +25,7 @@ include '../includes/_statistiques.php';
             <div class="stat-label">Défaites</div>
             <div class="stat-percentage">(<?php echo $totalMatchs > 0 ? round((($tot['Défaite'] ?? 0) / $totalMatchs) * 100, 1) : 0; ?>%)</div>
         </div>
-        <div class="stat-item draw">
-            <div class="stat-number"><?php echo htmlspecialchars($tot['Nul'] ?? 0); ?></div>
-            <div class="stat-label">Nuls</div>
-            <div class="stat-percentage">(<?php echo $totalMatchs > 0 ? round((($tot['Nul'] ?? 0) / $totalMatchs) * 100, 1) : 0; ?>%)</div>
-        </div>
+        <!-- Draws removed from stats (not supported) -->
         <div class="stat-item total">
             <div class="stat-number"><?php echo htmlspecialchars($totalMatchs); ?></div>
             <div class="stat-label">Total Matchs</div>

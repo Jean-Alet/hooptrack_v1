@@ -163,4 +163,11 @@ function getMatchLienFeuille($linkpdo) {
     return $q->fetchAll();
 }
 
+// Utility function for date formatting
+function formatDateFr($date) {
+    if (empty($date)) return '';
+    $datetime = new DateTime($date);
+    return $datetime->format('d-m-Y H:i:s');
+}
+
 ?>

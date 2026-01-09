@@ -63,7 +63,9 @@ CREATE TABLE `match` (
   `date_match` datetime NOT NULL,
   `equipe_adverse` varchar(50) NOT NULL,
   `lieu` enum('Domicile','Extérieur') NOT NULL,
-  `resultat` enum('Victoire','Défaite') DEFAULT NULL
+  `resultat` enum('Victoire','Défaite') DEFAULT NULL,
+  `score_equipe` int(11) DEFAULT NULL,
+  `score_adverse` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

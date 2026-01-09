@@ -18,19 +18,17 @@
     
     <div class="match-info">
         <p><strong>Match :</strong> <?php echo htmlspecialchars($m['equipe_adverse']); ?> (<?php echo htmlspecialchars($m['lieu']); ?>)</p>
-        <p><strong>Date :</strong> <?php echo htmlspecialchars($m['date_match']); ?></p>
+        <p><strong>Date :</strong> <?php echo htmlspecialchars(formatDateFr($m['date_match'])); ?></p>
     </div>
     
     <form method="post" action="../core/saisir_resultat.php">
         <input type="hidden" name="id_match" value="<?php echo htmlspecialchars($m['id_match']); ?>">
         
-        <label>Résultat :</label>
-        <select name="resultat" required>
-            <option value="">-- Choisir --</option>
-            <option value="Victoire">Victoire</option>
-            <option value="Défaite">Défaite</option>
-            <option value="Nul">Nul</option>
-        </select>
+        <label>Score de l'équipe :</label>
+        <input type="number" name="score_equipe" required>
+        
+        <label>Score de l'équipe adverse :</label>
+        <input type="number" name="score_adverse" required>
 
         <div class="actions">
             <input type="submit" value="Enregistrer le résultat">
