@@ -37,6 +37,7 @@
             <option value="Actif" <?php if ($data['statut'] === 'Actif') echo 'selected'; ?>>Actif</option>
             <option value="Inactif" <?php if ($data['statut'] === 'Inactif') echo 'selected'; ?>>Inactif</option>
             <option value="Blessé" <?php if ($data['statut'] === 'Blessé') echo 'selected'; ?>>Blessé</option>
+            <option value="Suspendu" <?php if ($data['statut'] === 'Suspendu') echo 'selected'; ?>>Suspendu</option>
         </select>
 
         <label>Commentaires :</label>
