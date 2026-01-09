@@ -4,7 +4,6 @@ include '../includes/_linkpdo.php';
 include '../includes/_queries.php';
 
 include '../includes/_nav.php';
-
 $matches = getMatch($linkpdo);
 ?>
 <!doctype html>
