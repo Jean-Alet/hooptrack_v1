@@ -11,8 +11,7 @@
 <body>
 <header class="container">
     <div>
-        <h1>Gestion équipe</h1>
-        <div>Connecté : <?php echo htmlspecialchars($_SESSION['login']); ?></div>
+        <h1>Gestion équipe de basketball</h1>
     </div>
 </header>
 

@@ -5,4 +5,5 @@
     <a href="../pages/feuille_match_disp.php" class="btn"> Feuilles de match</a>
     <a href="../pages/statistiques_disp.php" class="btn"> Statistiques</a>
     <a href="../core/déconnecter.php" class="btn">Déconnexion</a>
+    <span class="user-info">Connecté : <?php echo htmlspecialchars($_SESSION['login']); ?></span>
 </nav>

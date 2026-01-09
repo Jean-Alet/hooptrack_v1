@@ -68,6 +68,14 @@ nav a:hover, header a:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
+.user-info {
+    color: var(--white);
+    padding: 10px 16px;
+    font-weight: 500;
+    margin-left: auto;
+    font-size: 0.95em;
+}
+
 /* ============================================
    TITRES
    ============================================ */
@@ -316,6 +324,21 @@ a:hover {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.match-header h3 {
+    margin: 0;
+}
+
+.match-header .actions {
+    margin: 0;
 }
 
 /* ============================================

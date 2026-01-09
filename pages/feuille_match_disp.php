@@ -17,14 +17,25 @@ include '../includes/_feuilleliste.php';
         <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
     <?php endif; ?>
     <div class="actions">
-        <a href="preparerFeuilleMatch_disp.php">Préparer une nouvelle feuille</a>
+        <button onclick="window.location.href='preparerFeuilleMatch_disp.php'">Préparer une nouvelle feuille</button>
     </div>
     <?php if (empty($matches_with_feuille)): ?>
         <p>Aucune feuille de match trouvée.</p>
     <?php else: ?>
         <?php foreach ($matches_with_feuille as $match): ?>
             <div class="match-sheet">
-                <h3><?php echo htmlspecialchars(formatDateFr($match['date_match']) . ' - ' . $match['equipe_adverse'] . ' (' . $match['lieu'] . ') - Résultat: ' . ($match['resultat'] ?: 'N/A')); ?></h3>
+                <div class="match-header">
+                    <h3><?php echo htmlspecialchars(formatDateFr($match['date_match']) . ' - ' . $match['equipe_adverse'] . ' (' . $match['lieu'] . ') - Résultat: ' . ($match['resultat'] ?: 'N/A')); ?></h3>
+                    <div class="actions">
+                        <?php 
+                        $matchDate = strtotime($match['date_match']);
+                        $currentDate = time();
+                        if ($matchDate >= $currentDate): 
+                        ?>
+                            <button onclick="window.location.href='modifierFeuilleMatch_disp.php?match_id=<?php echo $match['id_match']; ?>'">Modifier</button>
+                        <?php endif; ?>
+                    </div>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -54,7 +65,6 @@ include '../includes/_feuilleliste.php';
                     $currentDate = time();
                     if ($matchDate >= $currentDate): 
                     ?>
-                        <a href="modifierFeuilleMatch_disp.php?match_id=<?php echo $match['id_match']; ?>">Modifier</a>
                     <?php else: ?>
                         <a href="evaluerJoueurs_disp.php?match_id=<?php echo $match['id_match']; ?>">Évaluer joueurs</a>
                         <?php if (empty($match['resultat'])): ?>

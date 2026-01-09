@@ -16,7 +16,7 @@
         <label>Mot de passe :</label>
         <input type="password" name="mdp">
         <div class="actions">
-            <input type="submit" value="Envoyer">
+            <input type="submit" value="Se connecter">
         </div>
     </form>
 </div>

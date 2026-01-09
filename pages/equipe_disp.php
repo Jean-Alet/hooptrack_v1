@@ -23,7 +23,7 @@
         <th>Poids</th>
         <th>Statut</th>
         <th>Commentaire</th>
-        <th>Modification/Suppression</th>
+        <th>Actions</th>
     </tr>
     <?php
     foreach ($data as $row) {
