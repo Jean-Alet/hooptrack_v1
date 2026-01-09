@@ -1,0 +1,42 @@
+<?php
+include '../includes/_session.php';
+include '../includes/_linkpdo.php';
+include '../includes/_queries.php';
+
+if (!isset($_GET['match_id']) || !isset($_GET['joueur_id'])) {
+    header('Location: ../pages/feuille_match_disp.php');
+    exit;
+}
+
+$id_match = (int)$_GET['match_id'];
+$joueur_id = $_GET['joueur_id'];
+
+// Vérifier que le match n'a pas encore eu lieu
+$match = getMatchById($linkpdo, $id_match);
+if (!$match) {
+    header('Location: ../pages/feuille_match_disp.php?error=Match introuvable.');
+    exit;
+}
+
+$matchDate = strtotime($match['date_match']);
+$currentDate = time();
+
+if ($matchDate < $currentDate) {
+    header('Location: ../pages/feuille_match_disp.php?error=Impossible de modifier une feuille de match qui a déjà eu lieu.');
+    exit;
+}
+
+// Récupérer les informations actuelles du joueur dans la feuille
+$current = $linkpdo->prepare('SELECT role, poste FROM feuille_match WHERE id_match = ? AND num_licence = ?');
+$current->execute([$id_match, $joueur_id]);
+$info = $current->fetch(PDO::FETCH_ASSOC);
+
+if (!$info) {
+    header('Location: ../pages/modifierFeuilleMatch_disp.php?match_id=' . $id_match . '&error=Joueur non trouvé dans la feuille.');
+    exit;
+}
+
+// Rediriger vers la page de modification avec les paramètres
+header('Location: ../pages/modifierParticipation_disp.php?match_id=' . $id_match . '&joueur_id=' . $joueur_id);
+exit;
+?>
