@@ -2,6 +2,8 @@
 
 Petit projet pour gérer une équipe de basketball : les joueurs, les matchs, les feuilles de match et evaluer les joueurs.
 
+Lien InfinityFree : https://appbasket.infinityfreeapp.com/
+
 Identifiants de connexion :
 - Login : coach
 - Mdp : basket
