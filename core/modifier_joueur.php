@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id = $_POST['id'];
 
-    // Check if we need to delete old and insert new if num_licence changed
+    // Vérifier si on doit supprimer l'ancien et insérer le nouveau si num_licence a changé
     $old_data = getJoueurById($linkpdo, $id);
 
     if (!$old_data) {
@@ -20,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($id !== $_POST['num_licence']) {
-        // Delete old
+        // Supprimer l'ancien
         deleteJoueur($linkpdo, $id);
-        // Insert new
-        insertJoueur($linkpdo, $_POST['num_licence'], $_POST['nom'], $_POST['prenom'], $_POST['date_naissance'], $_POST['taille'], $_POST['poids'], $_POST['statut'], $_POST['commentaires']);
+        // Insérer le nouveau
+        insertJoueur($linkpdo, $_POST['num_licence'], $_POST['nom'], $_POST['prenom'], $_POST['date_naissance'], $_POST['taille'], $_POST['poids'], $_POST['nationalite'] ?? '', $_POST['statut'], $_POST['commentaires']);
     } else {
-        // Update
-        updateJoueur($linkpdo, $id, $_POST['nom'], $_POST['prenom'], $_POST['date_naissance'], $_POST['taille'], $_POST['poids'], $_POST['statut'], $_POST['commentaires']);
+        // Mettre à jour l'existant
+        updateJoueur($linkpdo, $id, $_POST['nom'], $_POST['prenom'], $_POST['date_naissance'], $_POST['taille'], $_POST['poids'], $_POST['nationalite'] ?? '', $_POST['statut'], $_POST['commentaires']);
     }
 
     header('Location: ../pages/equipe_disp.php');

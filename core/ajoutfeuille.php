@@ -20,11 +20,6 @@ if (!empty($_POST)) {
     // Validations
     $errors = [];
 
-    // 4. Vérifier si une feuille existe déjà
-    if (feuilleExiste($linkpdo, $id_match)) {
-        $errors[] = "Une feuille de match existe déjà pour ce match.";
-    }
-
     // Vérifier que le match n'a pas encore eu lieu
     $match = getMatchById($linkpdo, $id_match);
     if (!$match) {
@@ -38,19 +33,19 @@ if (!empty($_POST)) {
     }
 
     if (count($entrees) > 0) {
-        // 1. Au moins 5 titulaires
+        // Au moins 5 titulaires
         $titulaires = array_filter($entrees, fn($e) => $e['role'] === 'Titulaire');
         if (count($titulaires) < 5) {
             $errors[] = "Il faut au moins 5 joueurs titulaires.";
         }
 
-        // 2. Joueurs uniques
+        // Joueurs uniques
         $nums = array_column($entrees, 'num');
         if (count($nums) !== count(array_unique($nums))) {
             $errors[] = "Un joueur ne peut pas être sélectionné plusieurs fois.";
         }
 
-        // 3. Postes uniques pour titulaires
+        // Postes uniques pour titulaires
         $postes_tit = array_column(array_filter($entrees, fn($e) => $e['role'] === 'Titulaire'), 'poste');
         if (count($postes_tit) !== count(array_unique($postes_tit))) {
             $errors[] = "Deux titulaires ne peuvent pas avoir le même poste.";
@@ -59,7 +54,22 @@ if (!empty($_POST)) {
 
     if (!empty($errors)) {
         $error_msg = implode(' ', $errors);
-        header("Location: ../pages/feuille_match_disp.php?error=" . urlencode($error_msg));
+        
+        // Déterminer si c'est une modification ou une nouvelle préparation
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
+        $is_modification = strpos($referer, 'modifierFeuilleMatch') !== false;
+        
+        if ($is_modification) {
+            // Si modification, rester sur la page de modification
+            $_SESSION['error'] = $error_msg;
+            $_SESSION['post_data'] = $_POST;
+            header("Location: ../pages/modifierFeuilleMatch_disp.php?match_id=" . $id_match);
+        } else {
+            // Si préparation nouvelle, rester sur la page de préparation
+            $_SESSION['error'] = $error_msg;
+            $_SESSION['post_data'] = $_POST;
+            header("Location: ../pages/preparerFeuilleMatch_disp.php");
+        }
         exit;
     }
 
@@ -74,7 +84,20 @@ if (!empty($_POST)) {
         } catch (Exception $ex) {
             $linkpdo->rollBack();
             $err = 'Erreur lors de la création de la feuille.';
-            header("Location: ../pages/feuille_match_disp.php?error=" . urlencode($err));
+            
+            // Déterminer si c'est une modification ou une nouvelle préparation
+            $referer = $_SERVER['HTTP_REFERER'] ?? '';
+            $is_modification = strpos($referer, 'modifierFeuilleMatch') !== false;
+            
+            if ($is_modification) {
+                $_SESSION['error'] = $err;
+                $_SESSION['post_data'] = $_POST;
+                header("Location: ../pages/modifierFeuilleMatch_disp.php?match_id=" . $id_match);
+            } else {
+                $_SESSION['error'] = $err;
+                $_SESSION['post_data'] = $_POST;
+                header("Location: ../pages/preparerFeuilleMatch_disp.php");
+            }
             exit;
         }
     }

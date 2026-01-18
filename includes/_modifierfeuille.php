@@ -19,4 +19,8 @@ if ($matchDate < $currentDate) {
 
 $feuille = getFeuilleParMatch($linkpdo, $id);
 $joueurs = getJoueurActif($linkpdo);
+
+// Si données POST sauvegardées en session (après une erreur), les utiliser pour pré-remplissage
+$post_data = $_SESSION['post_data'] ?? null;
+$use_post_data = $post_data !== null;
 ?>

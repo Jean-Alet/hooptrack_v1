@@ -1,17 +1,16 @@
-<?php include '../includes/_session.php'; 
-      include '../includes/_nav.php';?>
+<?php include '../includes/_session.php'; ?>
 
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>Accueil</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
+<?php include '../includes/_nav.php'; ?>
 <header class="container">
     <div>
-        <h1>Gestion équipe de basketball</h1>
+        <h1>Application de gestion d'une équipe de basketball</h1>
     </div>
 </header>
 

@@ -11,10 +11,11 @@ if (!empty($_POST)) {
     $date_naiss = $_POST['date_naissance'];
     $taille = $_POST['taille'] ?: null;
     $poids = $_POST['poids'] ?: null;
+    $nationalite = $_POST['nationalite'] ?? '';
     $statut = $_POST['statut'];
     $commentaire = $_POST['commentaire'] ?? '';
 
-    insertJoueur($linkpdo, $num, $nom, $prenom, $date_naiss, $taille, $poids, $statut, $commentaire);
+    insertJoueur($linkpdo, $num, $nom, $prenom, $date_naiss, $taille, $poids, $nationalite, $statut, $commentaire);
 }
 
 header('Location: ../pages/equipe_disp.php');

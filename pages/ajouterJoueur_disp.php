@@ -1,14 +1,13 @@
-<?php include '../includes/_session.php'; 
-      include '../includes/_nav.php'; ?>
+<?php include '../includes/_session.php'; ?>
 
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Ajouter joueur</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Ajouter un joueur</title>
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
+<?php include '../includes/_nav.php'; ?>
 
 <div class="container">
     <h2>Ajouter un joueur</h2>
@@ -32,6 +31,9 @@
 
         <label>Poids (kg) :</label>
         <input type="number" name="poids">
+
+        <label>Nationalité :</label>
+        <input type="text" name="nationalite" placeholder="ex: France">
 
         <label>Statut :</label>
         <select name="statut">

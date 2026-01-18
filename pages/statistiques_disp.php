@@ -4,15 +4,14 @@ include '../includes/_statistiques.php';
 ?>
 <!doctype html>
 <html><head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/style.css">
     <title>Statistiques</title>
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
 <?php include '../includes/_nav.php'; ?>
 
 <div class="container">
-    <h2 class="text-center" style="margin-bottom: 30px;">Statistiques de l'Équipe</h2>
+    <h2 class="text-center">Statistiques de l'Équipe</h2>
 
     <div class="stats-summary">
         <div class="stat-item victory">
@@ -25,7 +24,6 @@ include '../includes/_statistiques.php';
             <div class="stat-label">Défaites</div>
             <div class="stat-percentage">(<?php echo $totalMatchs > 0 ? round((($tot['Défaite'] ?? 0) / $totalMatchs) * 100, 1) : 0; ?>%)</div>
         </div>
-        <!-- Draws removed from stats (not supported) -->
         <div class="stat-item total">
             <div class="stat-number"><?php echo htmlspecialchars($totalMatchs); ?></div>
             <div class="stat-label">Total Matchs</div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 09 jan. 2026 à 13:26
+-- Généré le : dim. 18 jan. 2026 à 15:20
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -32,19 +32,25 @@ CREATE TABLE `feuille_match` (
   `num_licence` char(8) NOT NULL,
   `role` enum('Titulaire','Remplaçant') NOT NULL,
   `poste` enum('Meneur','Arrière','Ailier','Ailier fort','Pivot') NOT NULL,
-  `note` tinyint(4) DEFAULT NULL
+  `note` tinyint(4) DEFAULT NULL,
+  `commentaire` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `feuille_match`
 --
 
-INSERT INTO `feuille_match` (`id_match`, `num_licence`, `role`, `poste`, `note`) VALUES
-(124, 'LIC00001', 'Titulaire', 'Ailier fort', NULL),
-(124, 'LIC00004', 'Titulaire', 'Arrière', NULL),
-(124, 'LIC00007', 'Titulaire', 'Ailier', NULL),
-(124, 'LIC00008', 'Titulaire', 'Meneur', NULL),
-(124, 'LIC00011', 'Titulaire', 'Pivot', NULL);
+INSERT INTO `feuille_match` (`id_match`, `num_licence`, `role`, `poste`, `note`, `commentaire`) VALUES
+(124, 'LIC00001', 'Titulaire', 'Ailier fort', NULL, ''),
+(124, 'LIC00004', 'Titulaire', 'Arrière', NULL, ''),
+(124, 'LIC00007', 'Titulaire', 'Ailier', NULL, ''),
+(124, 'LIC00008', 'Titulaire', 'Meneur', NULL, ''),
+(124, 'LIC00011', 'Titulaire', 'Pivot', 8, 'sympa'),
+(125, 'LIC00001', 'Titulaire', 'Arrière', NULL, ''),
+(125, 'LIC00004', 'Titulaire', 'Ailier fort', NULL, ''),
+(125, 'LIC00007', 'Titulaire', 'Ailier', NULL, ''),
+(125, 'LIC00008', 'Titulaire', 'Pivot', NULL, ''),
+(125, 'LIC00011', 'Titulaire', 'Meneur', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -59,6 +65,7 @@ CREATE TABLE `joueur` (
   `date_naissance` date NOT NULL,
   `taille` decimal(4,1) NOT NULL,
   `poids` decimal(5,2) NOT NULL,
+  `nationalite` varchar(50) NOT NULL,
   `statut` enum('Actif','Blessé','Suspendu','Absent') NOT NULL DEFAULT 'Actif',
   `commentaires` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -67,14 +74,13 @@ CREATE TABLE `joueur` (
 -- Déchargement des données de la table `joueur`
 --
 
-INSERT INTO `joueur` (`num_licence`, `nom`, `prenom`, `date_naissance`, `taille`, `poids`, `statut`, `commentaires`) VALUES
-('LIC00001', 'Dupont', 'Jean', '1990-05-12', 185.0, 82.50, 'Actif', 'Ailier droit'),
-('LIC00002', 'Martin', 'Paul', '1988-11-03', 192.0, 90.00, 'Actif', 'Capitaine'),
-('LIC00004', 'Moreau', 'Alice', '2000-07-15', 168.0, 60.00, 'Actif', 'Jeune poussin'),
-('LIC00005', 'Leroy', 'Marc', '1985-09-30', 198.0, 102.30, 'Suspendu', 'Ancien pivot'),
-('LIC00007', 'Fabre', 'Nicolas', '1997-06-27', 190.0, 85.00, 'Actif', 'Remplaçant'),
-('LIC00008', 'Garcia', 'Ana', '2002-12-05', 165.0, 58.20, 'Actif', 'Jeune espoir'),
-('LIC00011', 'Declercq', 'Jack', '2000-06-08', 209.0, 105.00, 'Actif', 'MVP 2024, Superstar');
+INSERT INTO `joueur` (`num_licence`, `nom`, `prenom`, `date_naissance`, `taille`, `poids`, `nationalite`, `statut`, `commentaires`) VALUES
+('LIC00001', 'Dupont', 'Jean', '1990-05-12', 185.0, 82.50, '', 'Actif', 'Ailier droit'),
+('LIC00004', 'Moreau', 'Alice', '2000-07-15', 168.0, 60.00, '', 'Actif', 'Jeune poussin'),
+('LIC00005', 'Leroy', 'Marc', '1985-09-30', 198.0, 102.30, '', 'Suspendu', 'Ancien pivot'),
+('LIC00007', 'Fabre', 'Nicolas', '1997-06-27', 190.0, 85.00, '', 'Actif', 'Remplaçant'),
+('LIC00008', 'Garcia', 'Ana', '2002-12-05', 165.0, 58.20, '', 'Actif', 'Jeune espoir'),
+('LIC00011', 'Declerck', 'Jack', '2000-06-08', 209.0, 105.00, 'France', 'Actif', 'MVP 2024, Superstar');
 
 -- --------------------------------------------------------
 
@@ -103,7 +109,8 @@ INSERT INTO `match` (`id_match`, `date_match`, `equipe_adverse`, `lieu`, `result
 (3, '2025-11-15 19:00:00', 'Sharks', 'Domicile', 'Défaite', 90, 92, 0),
 (4, '2025-11-21 16:00:00', 'Gorillas', 'Extérieur', 'Victoire', 100, 90, 0),
 (5, '2025-11-25 10:30:00', 'Lions', 'Domicile', 'Victoire', 100, 90, 1),
-(124, '2026-01-13 13:30:00', 'Hawks', 'Domicile', NULL, NULL, NULL, 0);
+(124, '2026-01-13 13:30:00', 'Hawks', 'Domicile', 'Victoire', 2, 1, 0),
+(125, '2026-02-06 14:00:00', 'Jaguars', 'Domicile', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -121,7 +128,8 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`login_utilisateur`, `mdp_hash`) VALUES
-('jean', '$2y$10$gwF2JMLnl2.WOk5Qus/TwO00vhDQ3jHX72J8x4UlSFbPLbrOyALZy');
+('jean', '$2y$10$gwF2JMLnl2.WOk5Qus/TwO00vhDQ3jHX72J8x4UlSFbPLbrOyALZy'),
+('ronan', '$2y$10$sJIt.dhAoAC7IZY1bV75XOyMnSQX9Kq.2YMIDmhdVd6SdSBY1c6Ka');
 
 --
 -- Index pour les tables déchargées
@@ -155,7 +163,7 @@ ALTER TABLE `match`
 -- AUTO_INCREMENT pour la table `match`
 --
 ALTER TABLE `match`
-  MODIFY `id_match` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id_match` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- Contraintes pour les tables déchargées

@@ -1,14 +1,13 @@
-<?php include '../includes/_session.php'; 
-      include '../includes/_nav.php'; ?>
+<?php include '../includes/_session.php'; ?>
 
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Ajouter match</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Ajouter un match</title>
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
+<?php include '../includes/_nav.php'; ?>
 
 <div class="container">
     <h2>Ajouter un match</h2>

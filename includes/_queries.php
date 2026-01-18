@@ -18,7 +18,7 @@ function getMatchById($linkpdo, $id) {
 }
 
 function getJoueurById($linkpdo, $num) {
-    $sel = $linkpdo->prepare('SELECT num_licence, nom, prenom, date_naissance, taille, poids, statut, commentaires FROM joueur WHERE num_licence = ?');
+    $sel = $linkpdo->prepare('SELECT num_licence, nom, prenom, date_naissance, taille, poids, nationalite, statut, commentaires FROM joueur WHERE num_licence = ?');
     $sel->execute([$num]);
     return $sel->fetch();
 }
@@ -53,9 +53,8 @@ function getIdsMatchPasses($linkpdo) {
     return $req->fetchAll(PDO::FETCH_COLUMN);
 }
 
-// Player queries
 function getJoueur($linkpdo) {
-    $req = $linkpdo->prepare('SELECT num_licence, nom, prenom, date_naissance, taille, poids, statut, commentaires FROM joueur ORDER BY nom, prenom');
+    $req = $linkpdo->prepare('SELECT num_licence, nom, prenom, date_naissance, taille, poids, nationalite, statut, commentaires FROM joueur ORDER BY nom, prenom');
     $req->execute();
     return $req->fetchAll();
 }
@@ -66,15 +65,14 @@ function getJoueurActif($linkpdo) {
     return $stm2->fetchAll();
 }
 
-
-function insertJoueur($linkpdo, $num, $nom, $prenom, $date_naiss, $taille, $poids, $statut, $commentaire) {
-    $req = $linkpdo->prepare('INSERT INTO joueur (num_licence, nom, prenom, date_naissance, taille, poids, statut, commentaires) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-    $req->execute([$num, $nom, $prenom, $date_naiss, $taille, $poids, $statut, $commentaire]);
+function insertJoueur($linkpdo, $num, $nom, $prenom, $date_naiss, $taille, $poids, $nationalite, $statut, $commentaire) {
+    $req = $linkpdo->prepare('INSERT INTO joueur (num_licence, nom, prenom, date_naissance, taille, poids, nationalite, statut, commentaires) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $req->execute([$num, $nom, $prenom, $date_naiss, $taille, $poids, $nationalite, $statut, $commentaire]);
 }
 
-function updateJoueur($linkpdo, $id, $nom, $prenom, $date_naiss, $taille, $poids, $statut, $commentaires) {
-    $req = $linkpdo->prepare('UPDATE joueur SET nom = ?, prenom = ?, date_naissance = ?, taille = ?, poids = ?, statut = ?, commentaires = ? WHERE num_licence = ?');
-    $req->execute([$nom, $prenom, $date_naiss, $taille, $poids, $statut, $commentaires, $id]);
+function updateJoueur($linkpdo, $id, $nom, $prenom, $date_naiss, $taille, $poids, $nationalite, $statut, $commentaires) {
+    $req = $linkpdo->prepare('UPDATE joueur SET nom = ?, prenom = ?, date_naissance = ?, taille = ?, poids = ?, nationalite = ?, statut = ?, commentaires = ? WHERE num_licence = ?');
+    $req->execute([$nom, $prenom, $date_naiss, $taille, $poids, $nationalite, $statut, $commentaires, $id]);
 }
 
 function deleteJoueur($linkpdo, $num) {
@@ -82,8 +80,6 @@ function deleteJoueur($linkpdo, $num) {
     $sup->execute([$num]);
 }
 
-
-// Feuille match queries
 function feuilleExiste($linkpdo, $id_match) {
     $check = $linkpdo->prepare('SELECT COUNT(*) FROM feuille_match WHERE id_match = ?');
     $check->execute([$id_match]);
@@ -142,17 +138,14 @@ function aDejaJoue($linkpdo, $num) {
     return $q->fetchColumn() > 0;
 }
 
-// Auth queries
 function passwordHash($linkpdo, $login) {
     $requete = $linkpdo->prepare('SELECT mdp_hash FROM utilisateur WHERE login_utilisateur = ?');
     $requete->execute([$login]);
     return $requete->fetchColumn();
 }
 
-// Special queries
-
 function getFeuilleParMatch($linkpdo, $id_match) {
-    $q = $linkpdo->prepare("SELECT f.num_licence, j.nom, j.prenom, f.role, f.poste, f.note FROM feuille_match f JOIN joueur j ON f.num_licence = j.num_licence WHERE f.id_match = ? ORDER BY f.role DESC, j.nom, j.prenom");
+    $q = $linkpdo->prepare("SELECT f.num_licence, j.nom, j.prenom, j.taille, j.poids, j.nationalite, f.role, f.poste, f.note, f.commentaire FROM feuille_match f JOIN joueur j ON f.num_licence = j.num_licence WHERE f.id_match = ? ORDER BY f.role DESC, j.nom, j.prenom");
     $q->execute([$id_match]);
     return $q->fetchAll();
 }
@@ -163,11 +156,86 @@ function getMatchLienFeuille($linkpdo) {
     return $q->fetchAll();
 }
 
-// Utility function for date formatting
 function formatDateFr($date) {
     if (empty($date)) return '';
     $datetime = new DateTime($date);
     return $datetime->format('d-m-Y H:i:s');
+}
+
+// Fonctions pour les notes et commentaires de match
+function updateFeuilleMatchNote($linkpdo, $id_match, $num_licence, $note) {
+    $q = $linkpdo->prepare("UPDATE feuille_match SET note = ? WHERE id_match = ? AND num_licence = ?");
+    $q->execute([$note, $id_match, $num_licence]);
+}
+
+function updateFeuilleMatchCommentaire($linkpdo, $id_match, $num_licence, $commentaire) {
+    $q = $linkpdo->prepare("UPDATE feuille_match SET commentaire = ? WHERE id_match = ? AND num_licence = ?");
+    $q->execute([$commentaire, $id_match, $num_licence]);
+}
+
+function getHistoriqueNotesJoueur($linkpdo, $num_licence) {
+    $q = $linkpdo->prepare("SELECT f.note, m.date_match, m.equipe_adverse FROM feuille_match f JOIN `match` m ON f.id_match = m.id_match WHERE f.num_licence = ? AND f.note IS NOT NULL ORDER BY m.date_match DESC");
+    $q->execute([$num_licence]);
+    return $q->fetchAll();
+}
+
+function getHistoriqueCommentairesJoueur($linkpdo, $num_licence) {
+    $q = $linkpdo->prepare("SELECT f.commentaire, m.date_match, m.equipe_adverse FROM feuille_match f JOIN `match` m ON f.id_match = m.id_match WHERE f.num_licence = ? AND f.commentaire IS NOT NULL AND f.commentaire != '' ORDER BY m.date_match DESC");
+    $q->execute([$num_licence]);
+    return $q->fetchAll();
+}
+
+// Fonction pour récupérer la participation d'un joueur dans un match
+function getParticipationJoueur($linkpdo, $id_match, $num_licence) {
+    $participation = $linkpdo->prepare('SELECT role, poste FROM feuille_match WHERE id_match = ? AND num_licence = ?');
+    $participation->execute([$id_match, $num_licence]);
+    return $participation->fetch(PDO::FETCH_ASSOC);
+}
+
+// Fonction pour mettre à jour la participation d'un joueur
+function updateParticipationJoueur($linkpdo, $id_match, $num_licence, $role, $poste) {
+    $update = $linkpdo->prepare('UPDATE feuille_match SET role = ?, poste = ? WHERE id_match = ? AND num_licence = ?');
+    $update->execute([$role, $poste, $id_match, $num_licence]);
+}
+
+// Fonction pour supprimer un joueur d'une feuille
+function deleteFeuilleJoueurMatch($linkpdo, $id_match, $num_licence) {
+    $delete = $linkpdo->prepare('DELETE FROM feuille_match WHERE id_match = ? AND num_licence = ?');
+    $delete->execute([$id_match, $num_licence]);
+}
+
+// Fonction pour mettre à jour le résultat d'un match
+function updateResultatMatch($linkpdo, $id_match, $resultat, $score_equipe, $score_adverse, $overtime) {
+    $maj = $linkpdo->prepare('UPDATE `match` SET resultat = ?, score_equipe = ?, score_adverse = ?, overtime = ? WHERE id_match = ?');
+    $maj->execute([$resultat, $score_equipe, $score_adverse, $overtime, $id_match]);
+}
+
+// Fonction pour récupérer l'historique des évaluations d'un joueur dans les matchs
+function getHistoriqueEvaluations($linkpdo, $num_licence) {
+    $q = $linkpdo->prepare("SELECT f.note, m.date_match, m.equipe_adverse FROM feuille_match f JOIN `match` m ON f.id_match = m.id_match WHERE f.num_licence = ? AND f.note IS NOT NULL ORDER BY m.date_match DESC");
+    $q->execute([$num_licence]);
+    return $q->fetchAll();
+}
+
+// Fonction pour récupérer les commentaires d'un joueur dans les matchs
+function getCommentairesMatchs($linkpdo, $num_licence) {
+    $q = $linkpdo->prepare('SELECT m.date_match, fm.commentaire, fm.note, m.equipe_adverse FROM feuille_match fm JOIN `match` m ON fm.id_match = m.id_match WHERE fm.num_licence = ? AND fm.commentaire IS NOT NULL AND fm.commentaire != "" ORDER BY m.date_match DESC LIMIT 10');
+    $q->execute([$num_licence]);
+    return $q->fetchAll();
+}
+
+// Fonction pour récupérer les joueurs actifs avec tous leurs détails
+function getJoueurActifComplet($linkpdo) {
+    $q = $linkpdo->prepare('SELECT num_licence, nom, prenom, taille, poids, nationalite FROM joueur WHERE statut = "Actif" ORDER BY nom, prenom');
+    $q->execute();
+    return $q->fetchAll();
+}
+
+// Fonction pour récupérer tous les participants d'un match
+function getFeuille_Match($linkpdo, $id_match) {
+    $q = $linkpdo->prepare('SELECT num_licence, role, poste, note FROM feuille_match WHERE id_match = ?');
+    $q->execute([$id_match]);
+    return $q->fetchAll(PDO::FETCH_ASSOC);
 }
 
 ?>

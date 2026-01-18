@@ -32,9 +32,7 @@ if (!$joueur) {
 }
 
 // Récupérer la participation actuelle
-$participation = $linkpdo->prepare('SELECT role, poste FROM feuille_match WHERE id_match = ? AND num_licence = ?');
-$participation->execute([$id_match, $joueur_id]);
-$participation = $participation->fetch(PDO::FETCH_ASSOC);
+$participation = getParticipationMatch($linkpdo, $id_match, $joueur_id);
 
 if (!$participation) {
     header('Location: ../pages/modifierFeuilleMatch_disp.php?match_id=' . $id_match . '&error=Joueur non trouvé dans la feuille.');

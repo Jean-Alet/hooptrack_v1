@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $equipe = $_POST['equipe_adverse'] ?? '';
     $lieu = $_POST['lieu'] ?? 'Domicile';
 
-    // Validation : la date ne peut pas être dans le passé
+    // La date ne peut pas être passée
     $newDate = strtotime($date_match);
     $currentDate = time();
     

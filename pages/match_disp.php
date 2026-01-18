@@ -3,17 +3,16 @@ include '../includes/_session.php';
 include '../includes/_linkpdo.php';
 include '../includes/_queries.php';
 
-include '../includes/_nav.php';
 $matches = getMatch($linkpdo);
 ?>
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Matchs</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Match</title>
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
+<?php include '../includes/_nav.php'; ?>
 <div class="container">
     <h2>Matchs</h2>
     <?php if (isset($_GET['error'])): ?>

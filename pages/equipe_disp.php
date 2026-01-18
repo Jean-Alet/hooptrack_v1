@@ -2,9 +2,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>Équipe</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
 <?php include '../includes/_nav.php'; ?>
@@ -21,8 +20,8 @@
         <th>Date de naissance</th>
         <th>Taille</th>
         <th>Poids</th>
+        <th>Nationalité</th>
         <th>Statut</th>
-        <th>Commentaire</th>
         <th>Actions</th>
     </tr>
     <?php
@@ -34,8 +33,8 @@
         echo '<td>' . htmlspecialchars($row['date_naissance']) . '</td>';
         echo '<td>' . htmlspecialchars($row['taille']) . '</td>';
         echo '<td>' . htmlspecialchars($row['poids']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['nationalite'] ?? '') . '</td>';
         echo '<td>' . htmlspecialchars($row['statut']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['commentaires']) . '</td>';
         echo '<td><a href="../pages/modifierJoueur_disp.php?player_id=' . urlencode($row['num_licence']) . '">Modifier</a>';
         if (!aDejaJoue($linkpdo, $row['num_licence'])) {
             echo ' | <a href="../pages/supprimerJoueur_disp.php?player_id=' . urlencode($row['num_licence']) . '">Supprimer</a>';

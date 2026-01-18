@@ -49,8 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $maj = $linkpdo->prepare('UPDATE `match` SET resultat = ?, score_equipe = ?, score_adverse = ?, overtime = ? WHERE id_match = ?');
-    $maj->execute([$resultat, $score_equipe, $score_adverse, $overtime, $id]);
+    updateResultatMatch($linkpdo, $id, $resultat, $score_equipe, $score_adverse, $overtime);
 
     header('Location: ../pages/match_disp.php');
     exit;

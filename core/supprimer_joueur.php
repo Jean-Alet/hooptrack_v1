@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['confirm']) && isset($_POST['num_licence'])) {
         $num = $_POST['num_licence'];
         if (aDejaJoue($linkpdo, $num)) {
-            // Redirect with error
+            // Rediriger avec erreur
             header('Location: ../pages/equipe_disp.php?error=Impossible de supprimer un joueur qui a participé à un match.');
             exit;
         }

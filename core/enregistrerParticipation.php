@@ -43,8 +43,7 @@ if ($matchDate < $currentDate) {
 }
 
 // Mettre à jour la participation
-$update = $linkpdo->prepare('UPDATE feuille_match SET role = ?, poste = ? WHERE id_match = ? AND num_licence = ?');
-$update->execute([$role, $poste, $id_match, $joueur_id]);
+updateParticipationJoueur($linkpdo, $id_match, $joueur_id, $role, $poste);
 
 header('Location: ../pages/modifierFeuilleMatch_disp.php?match_id=' . $id_match . '&success=Participation mise à jour.');
 exit;

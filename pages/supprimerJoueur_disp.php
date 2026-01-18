@@ -5,9 +5,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Supprimer joueur</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Supprimer un joueur</title>
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
 <?php include '../includes/_nav.php'; ?>

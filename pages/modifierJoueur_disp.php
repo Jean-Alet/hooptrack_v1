@@ -4,9 +4,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Modifier joueur</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Modifier un joueur</title>
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
 <?php include '../includes/_nav.php'; ?>
@@ -31,6 +30,9 @@
 
         <label>Poids (kg) :</label>
         <input type="number" name="poids" step="0.01" value="<?php echo htmlspecialchars($data['poids']); ?>">
+
+        <label>Nationalité :</label>
+        <input type="text" name="nationalite" placeholder="ex: France" value="<?php echo htmlspecialchars($data['nationalite'] ?? ''); ?>">
 
         <label>Statut :</label>
         <select name="statut">

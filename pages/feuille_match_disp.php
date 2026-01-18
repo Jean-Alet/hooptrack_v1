@@ -1,23 +1,35 @@
 <?php
 include '../includes/_session.php';
 include '../includes/_feuilleliste.php';
+
+// Récupérer les détails du joueur si demandé
+$joueur_details = null;
+if (isset($_GET['joueur_id'])) {
+    $joueur_details = getJoueurById($linkpdo, $_GET['joueur_id']);
+}
 ?>
 <!doctype html>
 <html><head>
-    <meta charset="utf-8">
     <title>Feuilles de match</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
 <?php include '../includes/_nav.php'; ?>
 
 <div class="container">
     <h2>Feuilles de match</h2>
+    
+    <!-- Affichage des détails du joueur si demandé -->
+    <?php if ($joueur_details): ?>
+        <?php include '../includes/_joueurdetails.php'; ?>
+        <a href="feuille_match_disp.php">Retour</a>
+    <?php endif; ?>
+    
     <?php if (isset($_GET['error'])): ?>
         <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
     <?php endif; ?>
     <div class="actions">
-        <button onclick="window.location.href='preparerFeuilleMatch_disp.php'">Préparer une nouvelle feuille</button>
+        <a href="preparerFeuilleMatch_disp.php" class="btn">Préparer une nouvelle feuille</a>
     </div>
     <?php if (empty($matches_with_feuille)): ?>
         <p>Aucune feuille de match trouvée.</p>
@@ -32,7 +44,7 @@ include '../includes/_feuilleliste.php';
                         $currentDate = time();
                         if ($matchDate >= $currentDate): 
                         ?>
-                            <button onclick="window.location.href='modifierFeuilleMatch_disp.php?match_id=<?php echo $match['id_match']; ?>'">Modifier</button>
+                            <a href="modifierFeuilleMatch_disp.php?match_id=<?php echo $match['id_match']; ?>" class="btn">Modifier</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -43,6 +55,7 @@ include '../includes/_feuilleliste.php';
                             <th>Rôle</th>
                             <th>Poste</th>
                             <th>Note</th>
+                            <th>Commentaire</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,10 +64,11 @@ include '../includes/_feuilleliste.php';
                         foreach ($feuille as $entry):
                         ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($entry['nom'] . ' ' . $entry['prenom']); ?></td>
+                                <td><a href="?joueur_id=<?php echo htmlspecialchars($entry['num_licence']); ?>" class="joueur-link"><?php echo htmlspecialchars($entry['nom'] . ' ' . $entry['prenom']); ?></a></td>
                                 <td><?php echo htmlspecialchars($entry['role']); ?></td>
                                 <td><?php echo htmlspecialchars($entry['poste']); ?></td>
                                 <td><?php echo $entry['note'] !== null ? htmlspecialchars($entry['note']) : '-'; ?></td>
+                                <td><?php echo $entry['commentaire'] !== null && $entry['commentaire'] !== '' ? htmlspecialchars($entry['commentaire']) : '-'; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

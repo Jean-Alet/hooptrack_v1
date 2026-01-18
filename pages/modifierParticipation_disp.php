@@ -4,9 +4,8 @@ include '../includes/_modifierparticipation.php';
 ?>
 <!doctype html>
 <html><head>
-    <meta charset="utf-8">
     <title>Modifier participation</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
 <?php include '../includes/_nav.php'; ?>

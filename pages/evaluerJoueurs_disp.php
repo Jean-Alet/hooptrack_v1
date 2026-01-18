@@ -4,9 +4,8 @@ include '../includes/_evaluerjoueurs.php';
 ?>
 <!doctype html>
 <html><head>
-    <meta charset="utf-8">
     <title>Évaluer joueurs</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <?php include '../includes/_head.php'; ?>
 </head>
 <body>
 <?php include '../includes/_nav.php'; ?>
@@ -27,40 +26,39 @@ include '../includes/_evaluerjoueurs.php';
     <form method="post" action="../core/enregistrerEvaluations.php">
         <input type="hidden" name="id_match" value="<?php echo $match['id_match']; ?>">
         
-        <table>
-            <thead>
-                <tr>
-                    <th>Joueur</th>
-                    <th>Rôle</th>
-                    <th>Poste</th>
-                    <th>Note actuelle</th>
-                    <th>Nouvelle note (0-10)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($feuille as $entry): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($entry['nom'] . ' ' . $entry['prenom']); ?></td>
-                        <td><?php echo htmlspecialchars($entry['role']); ?></td>
-                        <td><?php echo htmlspecialchars($entry['poste']); ?></td>
-                        <td><?php echo $entry['note'] !== null ? htmlspecialchars($entry['note']) : '-'; ?></td>
-                        <td>
-                            <input  type="number" 
-                                    name="note_<?php echo $entry['num_licence']; ?>" 
-                                    min="0" 
-                                    max="10" 
-                                    step="0.5" 
-                                    value="<?php if ($entry['note'] !== null) { 
-                                                    echo htmlspecialchars($entry['note']); 
-                                                } else { 
-                                                    echo ''; }
-                                        ?>"
-                                    placeholder="0-10">
-                        </td>
-                    </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
+        <?php foreach ($feuille as $entry): ?>
+            <div class="joueur-eval-row">
+                <div class="joueur-eval-header">
+                    <strong><?php echo htmlspecialchars($entry['nom'] . ' ' . $entry['prenom']); ?></strong>
+                    <span><?php echo htmlspecialchars($entry['role']); ?></span>
+                    <span><?php echo htmlspecialchars($entry['poste']); ?></span>
+                    <span>Note actuelle: <?php echo $entry['note'] !== null ? htmlspecialchars($entry['note']) . '/10' : '-'; ?></span>
+                </div>
+                
+                <div class="joueur-eval-fields">
+                    <label>Note:</label>
+                    <input  type="number" 
+                            name="note_<?php echo $entry['num_licence']; ?>" 
+                            min="0" 
+                            max="10" 
+                            step="0.5" 
+                            value="<?php if ($entry['note'] !== null) { 
+                                            echo htmlspecialchars($entry['note']); 
+                                        } else { 
+                                            echo ''; }
+                                ?>"
+                            placeholder="0-10"
+                            >
+                </div>
+                
+                <div class="joueur-eval-fields">
+                    <label>Commentaire:</label>
+                    <textarea name="commentaire_<?php echo $entry['num_licence']; ?>" 
+                              placeholder="Ajouter un commentaire sur ce match..."
+                              ><?php echo htmlspecialchars($entry['commentaire'] ?? ''); ?></textarea>
+                </div>
+            </div>
+        <?php endforeach ?>
 
         <div class="actions">
             <input type="submit" value="Enregistrer les évaluations">

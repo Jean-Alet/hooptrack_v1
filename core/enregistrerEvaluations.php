@@ -41,14 +41,24 @@ $updated = 0;
 
 foreach ($feuille as $entry) {
     $noteKey = 'note_' . $entry['num_licence'];
-    if (isset($_POST[$noteKey]) && $_POST[$noteKey] !== '') {
-        $note = (float)$_POST[$noteKey];
+    $commentaireKey = 'commentaire_' . $entry['num_licence'];
+    
+    if ((isset($_POST[$noteKey]) && $_POST[$noteKey] !== '') || (isset($_POST[$commentaireKey]) && $_POST[$commentaireKey] !== '')) {
+        // Enregistrer la note
+        if (isset($_POST[$noteKey]) && $_POST[$noteKey] !== '') {
+            $note = (float)$_POST[$noteKey];
+            
+            // Validation de la note (0-10)
+            if ($note >= 0 && $note <= 10) {
+                updateFeuilleMatchNote($linkpdo, $id_match, $entry['num_licence'], $note);
+                $updated++;
+            }
+        }
         
-        // Validation de la note (0-10)
-        if ($note >= 0 && $note <= 10) {
-            $update = $linkpdo->prepare('UPDATE feuille_match SET note = ? WHERE id_match = ? AND num_licence = ?');
-            $update->execute([$note, $id_match, $entry['num_licence']]);
-            $updated++;
+        // Enregistrer le commentaire
+        if (isset($_POST[$commentaireKey]) && $_POST[$commentaireKey] !== '') {
+            $commentaire = $_POST[$commentaireKey];
+            updateFeuilleMatchCommentaire($linkpdo, $id_match, $entry['num_licence'], $commentaire);
         }
     }
 }

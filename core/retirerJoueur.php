@@ -27,8 +27,7 @@ if ($matchDate < $currentDate) {
 }
 
 // Retirer le joueur de la feuille
-$delete = $linkpdo->prepare('DELETE FROM feuille_match WHERE id_match = ? AND num_licence = ?');
-$delete->execute([$id_match, $joueur_id]);
+deleteFeuilleJoueurMatch($linkpdo, $id_match, $joueur_id);
 
 header('Location: ../pages/modifierFeuilleMatch_disp.php?match_id=' . $id_match);
 exit;
