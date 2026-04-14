@@ -1,3 +1,6 @@
+> **Une version améliorée de ce projet est disponible sur GitHub : [Jean-Alet/hooptrack_v2](https://github.com/Jean-Alet/hooptrack_v2)**  
+> Elle repose sur une architecture API REST avec une sécurité renforcée.
+
 # HoopTrack — Gestion d'équipe de basketball
 
 Application web PHP/MySQL pour gérer une équipe de basketball : effectif, matchs, feuilles de match, évaluations et statistiques.
